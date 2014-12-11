@@ -1,19 +1,24 @@
-<html>
-  <head>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
     {% if title %}
-    <title>{{ title }} - microblog</title>
+    {{ title }} - SkillsConnect
     {% else %}
-    <title>microblog</title>
+    SkillsConnect
     {% endif %}
-  </head>
-  <body>
-    <div>Microblog:
+{% endblock %}
+
+{% block navbar %}
+    SkillsConnect:
         <a href="{{ url_for('index') }}">Home</a>
         {% if g.user.is_authenticated() %}
         | <a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a>
         | <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
-    </div>
+{% endblock %}
+
+{% block content %}
     <hr>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -24,6 +29,4 @@
     </ul>
     {% endif %}
     {% endwith %}
-    {% block content %}{% endblock %}
-  </body>
-</html>
+{% endblock %}
