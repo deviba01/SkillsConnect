@@ -1,0 +1,6 @@
+README
+flipflop.py
+pip-egg-info/flipflop.egg-info/PKG-INFO
+pip-egg-info/flipflop.egg-info/SOURCES.txt
+pip-egg-info/flipflop.egg-info/dependency_links.txt
+pip-egg-info/flipflop.egg-info/top_level.txt
