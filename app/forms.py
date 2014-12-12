@@ -32,3 +32,11 @@ class EditForm(Form):
                                         'Please choose another one.')
             return False
         return True
+
+
+class PostForm(Form):
+    post = StringField('post', validators=[DataRequired()])
+
+
+class SearchForm(Form):
+    search = StringField('search', validators=[DataRequired()])
