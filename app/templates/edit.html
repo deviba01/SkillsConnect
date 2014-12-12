@@ -1,28 +1,81 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
+{% block head %}
+{{ super()}}
+<script type="text/javascript">
+skillsForm = function(learnOrTeach){
+    //alert('called')
+    form = document.forms['edit'];
+    table = document.querySelector('table');
+    button = document.getElementById('submit');
+    
+    newRow = document.createElement('tr');
+    newField = document.createElement('td');
+    fillerField = document.createElement('td');
+    newField.innerHTML = "<input id='skill' name='skill' size='24' type='text' value=''>";
+    
+    table.appendChild(newRow);
+    newRow.appendChild(fillerField);
+    newRow.appendChild(newField);
+    }
+</script>
+{% endblock %}
 
 {% block content %}
   <h1>Edit Your Profile</h1>
   <form action="" method="post" name="edit">
       {{form.hidden_tag()}}
       <table>
-          <tr>
+          <tr style="padding-bottom: 2%;">
         	<td>Your nickname:</td>
         	<td>
             	{{ form.nickname(size=24) }}
             	{% for error in form.errors.nickname %}
-            	<br><span style="color: red;">[{{ error }}]</span>
+            	<br><span style="color: red;">{{ error }}</span>
             	{% endfor %}
         	</td>
           </tr>
+
+	  <tr>
+		<td>Your Location:</td>
+		<td>
+		{{ form.location(size = 24) }}
+	  </tr>
           <tr>
               <td>About yourself:</td>
               <td>{{ form.about_me(cols=32, rows=4) }}</td>
           </tr>
-          <tr>
+	  <tr>
+	    <td>Your primary email:</td>
+	    <td>
+	    {{ form.primaryEmail(size=24) }}
+	    
+	    {% for error in form.errors.primaryEmail %}
+	    <br><span style="color: red;">{{ error }}</span>
+	    {% endfor %}
+	    </td>
+	  </tr>
+	  <tr>
+		<td>Learn or Teach:</td>
+		<td>{{ form.learnTeach() }}
+		</td>
+	  </tr>
+	  <tr id='skills'>
+	  <td>Skills Sought:</td>
+	  <td>{{ form.skill(size=24) }}</td>
+	  <td><a onclick="">Add Skill</a>
+	  </tr>
+          <tr id='submit'>
               <td></td>
               <td><input type="submit" value="Save Changes"></td>
           </tr>
       </table>
   </form>
+{% endblock %}
+
+
+{% block scripts %}
+
+
+{{super()}}
 {% endblock %}
