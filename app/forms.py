@@ -11,11 +11,12 @@ class LoginForm(Form):
 
 class EditForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
-    location = StringField('Location', validators=None)
+    location = StringField('location', validators=None)
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
-    primaryEmail = StringField('primaryEmail', validators=[Email()])
+    email = StringField('email', validators=[Email()])
     learnTeach = SelectField('learnTeach', choices=[('l', 'Learn'), ('t', 'Teach')])
     skill = StringField('skill', validators=[DataRequired()])
+    phone = StringField('phone', validators=None)
 
     def __init__(self, original_nickname, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
