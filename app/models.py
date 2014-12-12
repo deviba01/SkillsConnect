@@ -21,6 +21,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
+    location = db.Column(db.String(64), index=True) #new
+    phone = db.Column(db.String(20), index=True) #new
+    learnTeach = db.Column(db.String(1), index = True) #new
+    skill = db.Column(db.String(120), index = True) #new    
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)

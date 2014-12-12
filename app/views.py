@@ -121,6 +121,11 @@ def edit():
     if form.validate_on_submit():
         g.user.nickname = form.nickname.data
         g.user.about_me = form.about_me.data
+        g.user.location = form.location.data
+        g.user.email = form.email.data
+        g.user.phone = form.phone.data
+        g.user.learnTeach = form.learnTeach.data
+        g.user.skill = form.skill.data
         db.session.add(g.user)
         db.session.commit()
         flash('Your changes have been saved.')
@@ -128,6 +133,11 @@ def edit():
     elif request.method != "POST":
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
+        form.location.data = g.user.location
+        form.email.data = g.user.email
+        form.phone.data = g.user.phone
+        form.learnTeach.data = g.user.learnTeach
+        form.skill.data = g.user.skill
     return render_template('edit.html', form=form)
 
 
