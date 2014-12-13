@@ -1,5 +1,9 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='user.css')}}">
+{% endblock %}
 
 {% block content %}
     <table>
@@ -7,25 +11,42 @@
             <td><img src="{{ user.avatar(128) }}"></td>
             <td>
                 <h1>{{user.nickname}}</h1>
-                {% if user.email %}<p>{{ user.email }}</p>{% endif %}
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                
-                <p>{{ user.followers.count() }} followers | 
                 {% if user.id == g.user.id %}
                     <a href="{{ url_for('edit') }}">Edit your profile</a>
-                {% elif not g.user.is_following(user) %}
-                    <a href="{{ url_for('follow', nickname=user.nickname) }}">Follow</a>
-                {% else %}
-                    <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
-                {% endif %}
-                </p>
+                    {% endif %}
+                
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
             </td>
         </tr>
     </table>
     <hr>
-    {% for post in posts.items %}
-        {% include 'post.html' %}
-    {% endfor %}
-    {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Newer posts</a>{% else %}<< Newer posts{% endif %} | 
-    {% if posts.has_next %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% else %}Older posts >>{% endif %}
+    {% if user.skill %}
+    <table id="info">
+    <tr>
+    <td>
+    {% if user.learnTeach == 'l' %}<p><b>Student of </b></p>
+    {% elif user.learnTeach == 't' %}<p><b>Mentor of</b></p>{% endif %}
+    </td>
+    <td><p>{{ user.skill }}</p></td>
+    </tr>
+    <tr>
+    <td><p><b>Location</b></p>
+    <td>{% if user.location %}<p>{{ user.location }}</p>
+        {% else %}<p>unknown</p>{% endif %}
+    </td>
+    </tr>
+    <tr>
+    <td><p><b>Contact</b></p></td>
+    <td>
+    {% if user.email %}<p>{{ user.email }}</p>{% endif %}
+    </td></tr>
+    {% if user.phone %}
+    <tr><td></td><td><p>{{ user.phone }}</p>{% endif %}
+    </td>
+    </tr>
+    </table>
+    
+    {% else %}
+    <p>This user has not finished updating their profile yet.</p>
+    {% endif %}
 {% endblock %}
