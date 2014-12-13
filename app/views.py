@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from datetime import datetime
 from app import app, db, lm, oid
-from .forms import LoginForm, EditForm, PostForm, SearchForm
+from .forms import LoginForm, EditForm, PostForm, SearchForm, DeleteForm
 from .models import User, Post
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 
@@ -139,6 +139,17 @@ def edit():
         form.skill.data = g.user.skill
     return render_template('edit.html', form=form)
 
+@app.route('/delete', methods=['GET', 'POST'])
+@login_required
+def delete():
+    form = DeleteForm()
+    if form.validate_on_submit():
+        db.session.delete(g.user)
+        db.session.commit()
+        flash('Your profile has been deleted')
+    elif request.method != "POST":
+        form.nickname.data = None
+    return render_template('deleteProfile.html', form=form)
 
 @app.route('/follow/<nickname>')
 @login_required

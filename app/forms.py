@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 from .models import User
 
 
@@ -41,3 +41,8 @@ class PostForm(Form):
 
 class SearchForm(Form):
     search = StringField('search', validators=[DataRequired()])
+     
+class DeleteForm(Form):
+    nickname = StringField('nickname', validators=[DataRequired()])
+    confirm = StringField('confirm', validators=[DataRequired(), EqualTo('nickname', message='Nickname must match')])
+                                                                        

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Are you sure?</h2>
+  <form action="" method="post" name="delete">
+  {{form.hidden_tag()}}
+  <table>
+  <tr>
+  <td>
+  <p>If you're sure you want to delete your profile, enter your username:</p>
+  </td>
+  <td>{{ form.nickname(size=24) }}</td>
+  </tr>
+  <tr>
+  <td><p>Confirm your nickname:</p></td>
+  <td>{{ form.confirm(size=24) }}</td>
+  </tr>
+  <tr>
+  <td></td>
+  <td>
+  <input type="submit" value="Delete">
+  </td>
+  </tr>
+  <tr>
+  <td></td>
+  <td>{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	    <p>{{ message }} </p>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	</td>
+	<tr>
+{% endblock %}

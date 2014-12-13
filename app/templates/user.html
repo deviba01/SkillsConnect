@@ -12,14 +12,23 @@
             <td>
                 <h1>{{user.nickname}}</h1>
                 {% if user.id == g.user.id %}
-                    <a href="{{ url_for('edit') }}">Edit your profile</a>
+                    <a href="{{ url_for('edit') }}">Edit your profile</a> | 
+                    <a href="{{ url_for('delete') }}">Delete your profile</a>
+                    
+                {% else %}
+                    {% if not g.user.is_following(user) %}
+                        <a href="{{ url_for('follow', nickname=user.nickname) }}">Follow</a>
+                    {% else %}
+                        <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
                     {% endif %}
-                
+                {% endif %}  
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+            
             </td>
         </tr>
     </table>
     <hr>
+    <div>
     {% if user.skill %}
     <table id="info">
     <tr>
@@ -49,4 +58,12 @@
     {% else %}
     <p>This user has not finished updating their profile yet.</p>
     {% endif %}
+    </div>
+    <span>
+    {% for post in posts.items %}
+        {% include 'post.html' %}
+    {% endfor %}
+    {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Newer posts</a>{% endif %}
+    {% if posts.has_next %}< | a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% endif %}
+    </span>
 {% endblock %}
