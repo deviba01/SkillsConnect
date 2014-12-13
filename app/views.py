@@ -83,7 +83,7 @@ def after_login(resp):
         user = User(nickname=nickname, email=resp.email)
         db.session.add(user)
         db.session.commit()
-        # make the user follow him/herself
+        #make the user follow him/herself
         db.session.add(user.follow(user))
         db.session.commit()
     remember_me = False
@@ -110,8 +110,7 @@ def user(nickname, page=1):
         return redirect(url_for('index'))
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html',
-                           user=user,
-                           posts=posts)
+                           user=user, posts=posts)
 
 
 @app.route('/edit', methods=['GET', 'POST'])
