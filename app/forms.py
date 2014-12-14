@@ -45,4 +45,3 @@ class SearchForm(Form):
 class DeleteForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
     confirm = StringField('confirm', validators=[DataRequired(), EqualTo('nickname', message='Nickname must match')])
-                                                                        
