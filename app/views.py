@@ -7,6 +7,8 @@ from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 
+import sqlite3
+
 
 @lm.user_loader
 def load_user(id):
@@ -83,7 +85,7 @@ def after_login(resp):
         user = User(nickname=nickname, email=resp.email)
         db.session.add(user)
         db.session.commit()
-        #make the user follow him/herself
+        # make the user follow him/herself
         db.session.add(user.follow(user))
         db.session.commit()
     remember_me = False
@@ -110,7 +112,8 @@ def user(nickname, page=1):
         return redirect(url_for('index'))
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html',
-                           user=user, posts=posts)
+                           user=user,
+                           posts=posts)
 
 
 @app.route('/edit', methods=['GET', 'POST'])
@@ -190,8 +193,10 @@ def search():
 
 @app.route('/search_results/<query>')
 @login_required
-def search_results(query):
-    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
-    return render_template('search_results.html',
-                           query=query,
-                           results=results)
+def search_results(query,):
+	results = db.session.execute('''select nickname from User where User.skill = "query"''')
+	#results = db.session('''select skill from User''')
+    #results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+	return render_template('search_results.html',
+							query = query,
+							results = results)

@@ -2,13 +2,6 @@ from hashlib import md5
 from app import db
 from app import app
 
-import sys
-if sys.version_info >= (3, 0):
-    enable_search = False
-else:
-    enable_search = True
-    import flask.ext.whooshalchemy as whooshalchemy
-
 
 followers = db.Table(
     'followers',
@@ -18,6 +11,7 @@ followers = db.Table(
 
 
 class User(db.Model):
+    __searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -101,6 +95,34 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % (self.body)
 
+class Meeting(db.Model):
+	__searchable__ = ['body']
+	id = db.Column(db.Integer, primary_key=True)
+	teacher = db.Column(db.String(64), index=True, unique=True)
+	time = db.Column(db.String(5), index=True, unique=True)
+	day = db.Column(db.String(64), index=True)
+	skill = db.Column(db.String(120), index = True)    
+	classlocation = db.Column(db.String(64), index=True) 
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	user_skill = db.Column(db.String(120), db.ForeignKey('user.skill'))
+	
+	def follow(self, user):
+		if not self.is_following(user):
+			self.followed.append(user)
+			return self
 
-if enable_search:
-    whooshalchemy.whoosh_index(app, Post)
+	def unfollow(self, user):
+		if self.is_following(user):
+			self.followed.remove(user)
+			return self
+
+	def is_following(self, user):
+		return self.followed.filter(
+			followers.c.followed_id == user.id).count() > 0
+
+	def followed_posts(self):
+		return Post.query.join(
+			followers, (followers.c.followed_id == Post.user_id)).filter(
+			followers.c.follower_id == self.id).order_by(
+			Post.timestamp.desc())
+
