@@ -211,9 +211,13 @@ def search():
 @app.route('/search_results/<query>')
 @login_required
 def search_results(query,):
+	array =[]
 	results = db.session.execute('''select nickname from User where User.skill = "query"''')
+	for row in results:
+		array.append(row)
 	#results = db.session('''select skill from User''')
     #results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
 	return render_template('search_results.html',
 							query = query,
-							results = results)
+							results = results,
+							array = array)
