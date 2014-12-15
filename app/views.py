@@ -149,11 +149,29 @@ def delete():
     if form.validate_on_submit():
         db.session.delete(g.user)
         db.session.commit()
-        flash('Your profile has been deleted')
+        flash('Your profile has been deleted.')
     elif request.method != "POST":
         form.nickname.data = None
     return render_template('deleteProfile.html', form=form)
 
+# @app.route('/deletePost','<int:id>')
+# @login_required
+# def deletePost(id):
+#     post=Post.query.get(id)
+#     if post is None:
+#         flash('Post not found.')
+#         return redirect(url_for('index'))
+#     if post.author.id!=g.user.id:
+#         flash('You Cannot delete this post.')
+#         return redirect(url_for('index'))
+#     db.session.delete(post)
+#     db.session.commit()
+#     flash('Your post has been deleted.')
+#     return redirect(url_for('index'))
+
+
+
+    
 @app.route('/follow/<nickname>')
 @login_required
 def follow(nickname):
@@ -204,14 +222,14 @@ def search():
 
 @app.route('/search_results/<query>')
 @login_required
-def search_results(query,):
-	array =[]
-	results = db.session.execute('''select nickname from User where User.skill = "query"''')
-	for row in results:
-		array.append(row)
+def search_results(query):
+
+	# array =[]
+	# results = db.session.execute('''select nickname from User where User.skill = "query"''')
+	# for row in results:
+	# 	array.append(row)
 	#results = db.session('''select skill from User''')
-    #results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
-	return render_template('search_results.html',
+    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html',
 							query = query,
-							results = results,
-							array = array)
+							results = results)
