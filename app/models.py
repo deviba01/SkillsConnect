@@ -1,6 +1,13 @@
 from hashlib import md5
 from app import db
 from app import app
+import sys
+
+if sys.version_info >=(3,0):
+    enable_search = False
+else:
+    enable_search = True
+    import flask.ext.whooshalchemy as whooshalchemy
 
 
 followers = db.Table(
@@ -11,7 +18,7 @@ followers = db.Table(
 
 
 class User(db.Model):
-    __searchable__ = ['body']
+    #_searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -85,7 +92,7 @@ class User(db.Model):
 
 
 class Post(db.Model):
-    __searchable__ = ['body']
+    __searchable__ = ['body'] # an array with all the database fields that will be in the searchable index
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -94,9 +101,11 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post %r>' % (self.body)
+if enable_search:
+    whooshalchemy.whoosh_index(app,Post) # we have to initialise the full text index for this model by calling the whoosh_index function
 
 class Meeting(db.Model):
-	__searchable__ = ['body']
+	#searchable__ = ['body']
 	id = db.Column(db.Integer, primary_key=True)
 	teacher = db.Column(db.String(64), index=True, unique=True)
 	time = db.Column(db.String(5), index=True, unique=True)
