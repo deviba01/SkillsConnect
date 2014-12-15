@@ -2,7 +2,8 @@ from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from .models import User
-
+class SearchForm(Form):
+    search=StringField('search', validators=[DataRequired()])
 
 class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
