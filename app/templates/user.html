@@ -67,4 +67,3 @@
     {% if posts.has_next %}< | a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% endif %}
     </span>
 {% endblock %}
-
