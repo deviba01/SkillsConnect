@@ -46,3 +46,14 @@ class DeleteForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
     confirm = StringField('confirm', validators=[DataRequired(), EqualTo('nickname', message='Nickname must match')])
                                                                         
+class MeetingForm(Form):
+    instructor = StringField('instructor', validators=[DataRequired()])
+    skill = StringField('skill', validators=[DataRequired()])
+    time = StringField('time', validators=[DataRequired()])
+    day = StringField('day', validators=[DataRequired()])  
+    classlocation = StringField('location', validators=[DataRequired()])
+    
+    def __init__(self, instructor_nickname, skill, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        self.instructor_nickname = instructor_nickname
+        self.skill = skill

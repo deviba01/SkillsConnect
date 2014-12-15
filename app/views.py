@@ -142,6 +142,12 @@ def edit():
         form.skill.data = g.user.skill
     return render_template('edit.html', form=form)
 
+@app.route('/meeting', methods=['GET', 'POST'])
+@login_required
+def create():
+    form = MeetingForm(g.user.nickname, g.user.skill)
+    
+
 @app.route('/delete', methods=['GET', 'POST'])
 @login_required
 def delete():

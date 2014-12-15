@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static', filename='edit.css')}}">
+{% endblock %}
+
+{% block content %}
+ <h1>Edit Your Profile</h1>
+  <form action="" method="post" name="create">
+      {{form.hidden_tag()}}
+      <table>
+          <tr style="margin-botton: 2%;">
+        	<td>Instructor:</td>
+        	<td>
+            	{{ form.instructor(size=24) }}
+            	{% for error in form.errors.instructor %}
+            	<br><span style="color: red;">{{ error }}</span>
+            	{% endfor %}
+        	</td>
+          </tr>
+	  <tr>
+		<td>Skill:</td>
+		<td>
+		{{ form.skill(size = 24) }}
+	  </tr>
+          <tr>
+              <td>Date:</td>
+              <td>{{ form.day(size=24) }}</td>
+          </tr>
+	  <tr>
+	    <td>Your Primary Email:</td>
+	    <td>
+	    {{ form.email(size=24) }}	    
+	    {% for error in form.errors.email %}
+	    <br><span style="color: red;">{{ error }}</span>
+	    {% endfor %}
+	    </td>
+	  </tr>
+	  <tr>
+	  <td>Your Phone Number:</td>
+	  <td>{{ form.phone(size = 24) }}</td>
+	  </tr>
+	  <tr>
+		<td>Learn or Teach:</td>
+		<td>{{ form.learnTeach() }}
+		</td>
+	  </tr>
+	  <tr id='skills'>
+	  <td>Skills Sought:</td>
+	  <td>{{ form.skill(size=24) }}
+	  {% for error in form.errors.nickname %}
+            	<br><span style="color: red;">{{ error }}</span>
+            	{% endfor %}</td>
+	  <td><a onclick="">Add Skill</a>
+	  </tr>
+          <tr id='submit'>
+              <td></td>
+              <td><input type="submit" value="Save Changes"></td>
+          </tr>
+      </table>
+  </form>
+  {% endblock %}
