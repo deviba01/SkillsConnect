@@ -2,7 +2,7 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{url_for('.static', filename='edit.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='')}}">
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,8 @@
           <tr style="margin-botton: 2%;">
         	<td>Instructor:</td>
         	<td>
-            	{{ form.instructor(size=24) }}
-            	{% for error in form.errors.instructor %}
+            	{{ form.teacher(size=24) }}
+            	{% for error in form.errors.teacher %}
             	<br><span style="color: red;">{{ error }}</span>
             	{% endfor %}
         	</td>
@@ -29,30 +29,15 @@
               <td>{{ form.day(size=24) }}</td>
           </tr>
 	  <tr>
-	    <td>Your Primary Email:</td>
-	    <td>
-	    {{ form.email(size=24) }}	    
-	    {% for error in form.errors.email %}
-	    <br><span style="color: red;">{{ error }}</span>
-	    {% endfor %}
 	    </td>
 	  </tr>
 	  <tr>
-	  <td>Your Phone Number:</td>
-	  <td>{{ form.phone(size = 24) }}</td>
+	  <td>Time:</td>
+	  <td>{{ form.time(size = 24) }}</td>
 	  </tr>
 	  <tr>
-		<td>Learn or Teach:</td>
-		<td>{{ form.learnTeach() }}
-		</td>
-	  </tr>
-	  <tr id='skills'>
-	  <td>Skills Sought:</td>
-	  <td>{{ form.skill(size=24) }}
-	  {% for error in form.errors.nickname %}
-            	<br><span style="color: red;">{{ error }}</span>
-            	{% endfor %}</td>
-	  <td><a onclick="">Add Skill</a>
+	  <td>Class Location:</td>
+	  <td>{{ form.classlocation(size = 24) }}</td>
 	  </tr>
           <tr id='submit'>
               <td></td>

@@ -3,6 +3,9 @@ from wtforms import StringField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from .models import User
 
+class SearchForm(Form):
+    search=StringField('search', validators=[DataRequired()])
+
 
 class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
@@ -47,13 +50,13 @@ class DeleteForm(Form):
     confirm = StringField('confirm', validators=[DataRequired(), EqualTo('nickname', message='Nickname must match')])
                                                                         
 class MeetingForm(Form):
-    instructor = StringField('instructor', validators=[DataRequired()])
+    teacher = StringField('teacher', validators=[DataRequired()])
     skill = StringField('skill', validators=[DataRequired()])
     time = StringField('time', validators=[DataRequired()])
     day = StringField('day', validators=[DataRequired()])  
-    classlocation = StringField('location', validators=[DataRequired()])
+    classlocation = StringField('classlocation', validators=[DataRequired()])
     
-    def __init__(self, instructor_nickname, skill, *args, **kwargs):
+    def __init__(self, teacher_nickname, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
-        self.instructor_nickname = instructor_nickname
-        self.skill = skill
+        self.teacher_nickname = teacher_nickname
+       # self.skill = skill

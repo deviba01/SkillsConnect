@@ -3,8 +3,8 @@ from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from datetime import datetime
 from app import app, db, lm, oid
-from .forms import LoginForm, EditForm, PostForm, SearchForm, DeleteForm
-from .models import User, Post
+from .forms import LoginForm, EditForm, PostForm, SearchForm, DeleteForm, MeetingForm
+from .models import User, Post, Meeting
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 
 import sqlite3
@@ -142,10 +142,27 @@ def edit():
         form.skill.data = g.user.skill
     return render_template('edit.html', form=form)
 
-@app.route('/meeting', methods=['GET', 'POST'])
+@app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
-    form = MeetingForm(g.user.nickname, g.user.skill)
+	form = MeetingForm(g.user.nickname)
+	if form.validate_on_submit():
+		meeting = Meeting(teacher=form.teacher.data, time=form.time.data, day=form.day.data, skill=form.skill.data, classlocation=form.classlocation.data)
+		#g.user.teacher = form.teacher.data
+		#g.user.time = form.time.data
+		#g.user.day = form.day.data
+		#g.user.skill = form.skill.data
+		#g.user.classlocation = form.classlocation.data
+		db.session.add(meeting)
+		db.session.commit()
+		flash('Your meeting has been saved')
+	#elif request.method !="POST":
+	#	form.teacher.data = g.user.teacher
+	#	form.time.data = g.user.time
+	#	form.day.data = g.user.day
+	#	form.skill.data = g.user.skill
+	#	form.classlocation.data = g.user.classlocation
+	return render_template('createClass.html', form=form)
     
 
 @app.route('/delete', methods=['GET', 'POST'])
@@ -210,14 +227,14 @@ def search():
 
 @app.route('/search_results/<query>')
 @login_required
-def search_results(query,):
-	array =[]
-	results = db.session.execute('''select nickname from User where User.skill = "query"''')
-	for row in results:
-		array.append(row)
+def search_results(query):
+
+	# array =[]
+	# results = db.session.execute('''select nickname from User where User.skill = "query"''')
+	# for row in results:
+	# 	array.append(row)
 	#results = db.session('''select skill from User''')
-    #results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
-	return render_template('search_results.html',
+    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html',
 							query = query,
-							results = results,
-							array = array)
+							results = results)

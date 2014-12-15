@@ -3,10 +3,14 @@
 
 {% block content %}
 <h1>Search results for "{{query}}":</h1>
+{%if results%}
+	{% for post in results %}
+		{%include 'post.html'%}
+	{% endfor %}
 
-{% for result in array %}
-	{{result}}
-{% endfor %}
+{%else%}
+	There is no result for {{query}}.
+{%endif%}
 
 
 {% endblock %}
