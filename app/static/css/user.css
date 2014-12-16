@@ -1,0 +1,17 @@
+#info td {
+    margin-left: 3px;
+    padding: 0%;
+    }
+#info p{
+    margin-left: 3px;
+    }
+    
+.info {
+    float: left;
+    width: 50%;
+    }
+    
+.posts {
+    float: right;
+    width: 50%;
+    }
