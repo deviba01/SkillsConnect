@@ -11,6 +11,8 @@
             <td><img src="{{ user.avatar(128) }}"></td>
             <td>
                 <h1>{{user.nickname}}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                <p> {{user.followers.count()}} followers </p>
                 {% if user.id == g.user.id %}
                     <a href="{{ url_for('edit') }}">Edit your profile</a> | 
                     <a href="{{ url_for('delete') }}">Delete your profile</a> 
@@ -25,7 +27,7 @@
                         <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
                     {% endif %}
                 {% endif %}  
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+
             
             </td>
         </tr>
