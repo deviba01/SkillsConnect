@@ -23,13 +23,11 @@ skillsForm = function(learnOrTeach){
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{url_for('.static', filename='css/edit.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='edit.css')}}">
 {% endblock %}
 
-{% block banner%}
+{% block content %}
   <h1>Edit Your Profile</h1>
-{% endblock %}
-{% block col2 %}
   <form action="" method="post" name="edit">
       {{form.hidden_tag()}}
       <table>
@@ -50,6 +48,7 @@ skillsForm = function(learnOrTeach){
           <tr>
               <td><p>About You:</p></td>
               <td>{{ form.about_me(cols=26, rows=4) }}</td>
+
           </tr>
 	  <tr>
 	    <td><p>Your Primary Email:</p></td>
@@ -75,7 +74,7 @@ skillsForm = function(learnOrTeach){
 	  {% for error in form.errors.nickname %}
             	<br><span style="color: red;">{{ error }}</span>
             	{% endfor %}</td>
-	  <td>
+	  <td><a onclick="">Add Skill</a>
 	  </tr>
           <tr id='submit'>
               <td></td>
@@ -83,16 +82,6 @@ skillsForm = function(learnOrTeach){
           </tr>
       </table>
   </form>
-  
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>{{ message }} </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
 {% endblock %}
 
 

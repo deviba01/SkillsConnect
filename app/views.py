@@ -50,9 +50,15 @@ def index(page=1):
         flash('Your post is now live!')
         return redirect(url_for('index'))
     posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
+    classMeetings = db.session.execute('''select teacher, time, day, classlocation, skill from Meeting ''')
+    teachers = db.session.execute('''select nickname from User where learnTeach ='t' ''')
+    students = db.session.execute('''select nickname from User where learnTeach ='l' ''')
     return render_template('index.html',
                            title='Home',
                            form=form,
+                           classMeetings = classMeetings,
+                           teachers = teachers,
+                           students = students,
                            posts=posts)
 
 
