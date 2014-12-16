@@ -34,7 +34,7 @@ skillsForm = function(learnOrTeach){
       {{form.hidden_tag()}}
       <table>
           <tr style="margin-botton: 2%;">
-        	<td>Your Nickname:</td>
+        	<td><p>Your Nickname:</p></td>
         	<td>
             	{{ form.nickname(size=24) }}
             	{% for error in form.errors.nickname %}
@@ -43,16 +43,16 @@ skillsForm = function(learnOrTeach){
         	</td>
           </tr>
 	  <tr>
-		<td>Your Location:</td>
+		<td><p>Your Location:</p></td>
 		<td>
 		{{ form.location(size = 24) }}
 	  </tr>
           <tr>
-              <td>About You:</td>
+              <td><p>About You:</p></td>
               <td>{{ form.about_me(cols=26, rows=4) }}</td>
           </tr>
 	  <tr>
-	    <td>Your Primary Email:</td>
+	    <td><p>Your Primary Email:</p></td>
 	    <td>
 	    {{ form.email(size=24) }}	    
 	    {% for error in form.errors.email %}
@@ -61,16 +61,16 @@ skillsForm = function(learnOrTeach){
 	    </td>
 	  </tr>
 	  <tr>
-	  <td>Your Phone Number:</td>
+	  <td><p>Your Phone Number:</p></td>
 	  <td>{{ form.phone(size = 24) }}</td>
 	  </tr>
 	  <tr>
-		<td>Learn or Teach:</td>
+		<td><p>Learn or Teach:</p></td>
 		<td>{{ form.learnTeach() }}
 		</td>
 	  </tr>
 	  <tr id='skills'>
-	  <td>Skills Sought:</td>
+	  <td><p>Skills Sought:</p></td>
 	  <td>{{ form.skill(size=24) }}
 	  {% for error in form.errors.nickname %}
             	<br><span style="color: red;">{{ error }}</span>

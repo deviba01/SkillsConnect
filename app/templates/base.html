@@ -17,6 +17,8 @@
     
         <!-- Custom styles for this template -->
     <link href="{{url_for('.static', filename="css/starter-template.css")}}" rel="stylesheet">
+    
+    <link href="{{url_for('.static', filename="css/base.css")}}" rel="stylesheet">
 {% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -57,15 +59,15 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-4">
+        <div id="firstCol" class="col-md-4">
 	{% block col1 %}
 	{% endblock %}
         </div>
-        <div class="col-md-4">
+        <div id="middleCol" class="col-md-4">
 	{% block col2 %}
 	{% endblock %}
        </div>
-        <div class="col-md-4">
+        <div id="thirdCol" class="col-md-4">
 	{% block col3 %}
 	{% endblock %}
         </div>

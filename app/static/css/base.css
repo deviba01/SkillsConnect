@@ -1,0 +1,36 @@
+div.jumbotron{
+    background-color: #001F36;
+    color: #FBFFCD;
+    }
+body{
+    background-color: #1C5560
+    }
+.jumbotron h1, .jumbotron p {
+    color: #FBFFCD;
+    }
+h1{
+    color: #FBFFCD;
+    }
+hr {
+    height: 1px;
+    background-color: #001F36;
+    color: #001F36;
+    border: 0px;
+    }
+
+a {
+    color: #79AE92;
+    }
+a:hover{
+    color: #1C5560;  
+    }
+    
+p, td{
+    color: #FBFFCD;
+    }
+footer p{
+    color: #79AE92;
+    }
+input, textarea {
+    color: #001F36;    
+    }
