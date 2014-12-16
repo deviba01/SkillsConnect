@@ -2,13 +2,11 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{url_for('.static', filename='css/edit.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='')}}">
 {% endblock %}
 
-{% block banner %}
- <h1>Create a Meeting</h1>
- {% endblock %}
- {% block col2 %}
+{% block content %}
+ <h1>Edit Your Profile</h1>
   <form action="" method="post" name="create">
       {{form.hidden_tag()}}
       <table>

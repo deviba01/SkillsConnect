@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{url_for('.static', filename='user.css')}}">
 {% endblock %}
 
-{% block banner %}
+{% block content %}
     <table>
         <tr valign="top">
             <td><img src="{{ user.avatar(128) }}"></td>
@@ -30,8 +30,8 @@
             </td>
         </tr>
     </table>
-{% endblock %}
-{% block col1 %}
+    <hr>
+    <div>
     {% if user.skill %}
     <table id="info">
     <tr>
@@ -61,13 +61,12 @@
     {% else %}
     <p>This user has not finished updating their profile yet.</p>
     {% endif %}
-{% endblock %}
-{% block col3 %}
+    </div>
     <span>
 	{% for post in posts.items %}
         {% include 'post.html' %}
     {% endfor %}
     {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Newer posts</a>{% endif %}
-    {% if posts.has_next %}< | a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% endif %}
+    {% if posts.has_next %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% endif %}
 	</span>
 {% endblock %}

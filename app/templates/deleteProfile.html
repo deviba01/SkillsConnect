@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block banner %}
+{% block content %}
   <h2>Are you sure?</h2>
   <form action="" method="post" name="delete">
   {{form.hidden_tag()}}
@@ -18,7 +18,7 @@
   <tr>
   <td></td>
   <td>
-  <input type="submit" value="Delete"></form>
+  <input type="submit" value="Delete">
   </td>
   </tr>
   <tr>
@@ -32,5 +32,4 @@
 	{% endwith %}
 	</td>
 	<tr>
-    </table>
 {% endblock %}
