@@ -1,77 +1,79 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 
-{% block content %}
+{% block styles %}
+{{super()}}
+<link href="{{url_for('.static', filename="css/index.css")}}" rel="stylesheet">
+{% endblock %}
+
+{% block banner %}
     <h1>Hi, {{g.user.nickname}}!</h1>
+{% endblock %}
+{% block col2 %}
+    <h1>Posts</h1>
     <form action="" method="post" name="post">
         {{ form.hidden_tag() }}
         <table>
             <tr>
-                <td>Say something about Skill:</td>
                 <td>{{ form.post(size=30, maxlength=140) }}</td>
                 <td>
                 {% for error in form.errors.post %}
                 <span style="color: red;">[{{ error }}]</span><br>
                 {% endfor %}
                 </td>
-                
-            </tr>
-            <tr>
-                <td></td>
                 <td><input type="submit" value="Post!"></td>
                 <td></td>
             </tr>
         </table>
     </form>
-   
-    
     {% for post in posts.items %}
         {% include 'post.html' %}
     {% endfor %}
-    
-    <hr>
-    Hey! here are the class schedule offered this time
-    <hr>
-    |    Instructor    |   Time   |   Date   |   Location   |  Skill   |
+    {% if posts.has_prev %}<a href="{{ url_for('index', page=posts.prev_num) }}"><< Newer posts</a>{% endif %}
+    {% if posts.has_next %} | <a href="{{ url_for('index', page=posts.next_num) }}">Older posts >></a>{% endif %}
+{% endblock %}
+{% block col1 %}
+    {% if g.user.learnTeach == 'l' %}
+        <h1>Potential Mentors</h1>
+        {% for teacher in teachers %}
+	{% if teacher[8] == g.user.skill %}
+    	<table>
+    		<tr><td><a href="{{url_for('user', nickname=teacher[1])}}">{{teacher[1]}}</a></td>
+    		</tr>
+	{% endif %}
+    	{%endfor%}
+    	</table>
+    {% elif g.user.learnTeach =='t'%}
+        <h1>Potential Students</h1>
+	
+	{%for student in students%}
+	{% if student[8] == g.user.skill %}
+    	<table>
+    		<tr><td><a href="{{url_for('user', nickname=student[1])}}">{{student[1]}}</a></td></tr>
+	{% endif %}
+    	{%endfor%}
+    	</table>
+	
+	
+    {% else %}
+        <p>Complete your profile to view potential teachers or students!</p>
+    {% endif %}
+{% endblock %}
+{% block col3 %}
+    {% if g.user.learnTeach %}
+        <h1>Potential Meetings</h1>
+	<table class="meeting"><tr class="meeting"><td>Instructor</td><td>Time</td><td>Date</td><td>Location</td><td>Skill</td>
     {% for meeting in classMeetings %}
-    <table>
-    
-    	<tr>
+    	<tr class="meeting">
     	
     	{%if g.user.skill == meeting[4] %}
     		{%for i in range(5)%} 
-    			<td>|       {{meeting[i]}}       </td>
+    			<td>       {{meeting[i]}}       </td>
     		{%endfor%}
     	{%endif%}
-    	</tr>
-    </table>
-    {%endfor%}
-    
-    <br>
-    <hr>
-    
-
-    {%if g.user.learnTeach=='l'%}
-    	{% for teacher in teachers %}
-    	<table>
-    		<tr><td>|	{{teacher[0]}}        </td>
-    		</tr>
-    	{%endfor%}
-    	</table>
-    {%else%}    		
-    	{%for student in students%}
-    	<table>
-    		<tr><td>|	{{student[0]}}	</td></tr>
-    	{%endfor%}
-    	</table>
-    {%endif%}
-    		
-    	
-    	 
-    	
-   
-    
-   
-    {% if posts.has_prev %}<a href="{{ url_for('index', page=posts.prev_num) }}"><< Newer posts</a>{% endif %}
-    {% if posts.has_next %} | <a href="{{ url_for('index', page=posts.next_num) }}">Older posts >></a>{% endif %}
+	{% endfor %}
+	</table>
+    {% else %}
+        <p>Complete your profile to view potential classes!</p>
+    {% endif %}
 {% endblock %}

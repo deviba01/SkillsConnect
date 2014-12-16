@@ -51,8 +51,9 @@ def index(page=1):
         return redirect(url_for('index'))
     posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
     classMeetings = db.session.execute('''select teacher, time, day, classlocation, skill from Meeting ''')
-    teachers = db.session.execute('''select nickname from User where learnTeach ='t' ''')
-    students = db.session.execute('''select nickname from User where learnTeach ='l' ''')
+    skill = str(g.user.skill)
+    teachers = db.session.execute('''select * from User where learnTeach ='t' ''')
+    students = db.session.execute('''select * from User where learnTeach ='l' ''')
     return render_template('index.html',
                            title='Home',
                            form=form,

@@ -1,8 +1,10 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 
-{% block content %}
+{% block banner%}
 <h1>Search results for "{{query}}":</h1>
+{% endblock %}
+{% block col2 %}
 {%if results%}
 	{% for post in results %}
 		{%include 'post.html'%}

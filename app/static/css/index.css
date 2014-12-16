@@ -1,0 +1,17 @@
+.meeting>td {
+    width: 15%;
+    margin: 10%;
+    }
+.meeting td{
+    border-left-style: solid;
+    border-right-style: solid;
+    
+    border-left-color: #001F36;
+    border-right-color: #001F36;
+    
+    border-left-width: 2px;
+    border-right-width: 2px;
+    }
+a:hover{
+    color: #001F36;
+    }

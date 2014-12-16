@@ -5,14 +5,11 @@
     <link rel="stylesheet" href="{{url_for('.static', filename='user.css')}}">
 {% endblock %}
 
-{% block content %}
+{% block banner %}
     <table>
         <tr valign="top">
-
             <td>
                 <h1>{{user.nickname}}</h1>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                <p> {{user.followers.count()}} followers </p>
                 {% if user.id == g.user.id %}
                     <a href="{{ url_for('edit') }}">Edit your profile</a> | 
                     <a href="{{ url_for('delete') }}">Delete your profile</a> 
@@ -27,13 +24,13 @@
                         <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
                     {% endif %}
                 {% endif %}  
-
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
             
             </td>
         </tr>
     </table>
-    <hr>
-    <div>
+{% endblock %}
+{% block col1 %}
     {% if user.skill %}
     <table id="info">
     <tr>
@@ -63,12 +60,13 @@
     {% else %}
     <p>This user has not finished updating their profile yet.</p>
     {% endif %}
-    </div>
+{% endblock %}
+{% block col3 %}
     <span>
 	{% for post in posts.items %}
         {% include 'post.html' %}
     {% endfor %}
-    {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Newer posts</a>{% endif %}
-    {% if posts.has_next %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% endif %}
+    {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Older posts</a>{% endif %}
+    {% if posts.has_next %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}"> | Newer posts >></a>{% endif %}
 	</span>
 {% endblock %}
